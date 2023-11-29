@@ -3,6 +3,7 @@ Collection of code I authored in one way or another and I decided to keep it eit
   
 Most of it is written by me. Some code may containt bits and pieces found on the StackOverflow or similar websites. You know how it goes.  
   
-Disclaimer:
+Disclaimer:  
+
   ICalendar - I found the bulk of the code and I had to hammer on it until it worked.  
   CustomKanbanBoard - Started from some online tutorial giving me a platform to stand on, which got further expanded and customized.  
