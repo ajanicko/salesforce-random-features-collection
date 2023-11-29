@@ -1,0 +1,18 @@
+.slds-item {
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    padding: 0.45rem;
+    margin: 0.25rem;
+}
+
+.red-border {
+    border: 1px solid red;
+}
+
+.yellow-border {
+    border: 1px solid yellow;
+}
+
+.white-border {
+    border: 1px solid #d8dde6;
+}

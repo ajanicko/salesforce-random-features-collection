@@ -1,0 +1,28 @@
+.card-wrapper {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+}
+
+.status-container {
+    float: left;
+    border: 2px solid #d8dde6;
+    margin: 0.05rem;
+    border-radius: 0.25rem;
+}
+
+.flex-container {
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #fff;
+}
+
+.flex-item {
+    flex: 1 1 auto;
+    margin: 10px;
+}

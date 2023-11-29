@@ -1,0 +1,91 @@
+<apex:page controller="BrokerRatesPDFController" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf"
+    applyBodyTag="false" applyHtmlTag="false">
+    <html>
+
+        <head>
+            <style type="text/css">
+                @page {
+                    margin-bottom: 3cm;
+    
+                    @bottom-center {
+                        content: element(footer);
+                    }
+                }
+    
+                .pagenumber:before {
+                    content: counter(page);
+                }
+    
+                div.footer {
+                    display: block;
+                    padding: 10px;
+                    position: running(footer);
+                    font-size: 12px;
+                    color:rgb(20, 52, 106);
+                }
+    
+                td{
+                    border: 0.5px solid rgb(224, 224, 224);
+                    padding-left: 3px;
+                }
+                th{
+                    border-right: 0.5px solid rgb(224, 224, 224);
+                    border-left: 0.5px solid rgb(224, 224, 224);
+                    font-weight: 1000;
+                    color: rgb(20, 52, 106);
+                    padding-left: 3px;
+                    background-color:  rgb(195, 218, 237);
+                    
+                }
+                table {
+                    border-collapse: collapse;
+                }
+    
+            </style>
+        </head>
+    
+        <body style="font-family: Arial Unicode MS;font-weight: 900;">
+            <div style="text-align: center" class="footer" name="footer">
+                <div class="pagenumber"></div>
+                <div style="width: 50%;float: left;color:rgb(20, 52, 106);">určeno pro: {!brokerName}</div>
+                <div style="width: 50%;float: left;color:rgb(20, 52, 106);">platnost k {!formatedDate}</div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div style="float: left; color:rgb(20, 52, 106);font-size:16px; padding-bottom:10px;" >provizní řád</div>
+                <div style="float: right;color:rgb(20, 52, 106);font-size:16px; padding-bottom:10px">holver</div>
+            </div>
+            <div style="clear: both;"></div>
+            <apex:variable var="cnt" value="{!0}" />
+            <apex:repeat var="ratesWrap" value="{!wrappedRates}">
+                <apex:pageBlock rendered="{!ratesWrap.categoryRates.size > 0}">
+                    <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}">
+                        <div style="text-align: center; fon-size:12px; color:rgb(20, 52, 106);padding-bottom:10px;">{!ratesWrap.category}</div>
+                        <table style="table-layout: fixed; width:100%;">
+                            <tr style="font-size: 12px; border-bottom: 2px solid black; font-weight: bold;">
+                                <th style="width:15%;">produkt</th>
+                                <th class="myclass" style="width:15%;">varianta produktu</th>
+                                <th style="width:10%;">sazba A</th>
+                                <th style="width:10%;">sazba B</th>
+                                <th style="width:25%;">ručení</th>
+                                <th style="width:25%;">poznámka</th>
+                            </tr>
+                            <apex:repeat var="rate" value="{!ratesWrap.categoryRates}">
+                                <tr style="font-size: 10px;">
+                                    <td>{!rate.productName}</td>
+                                    <td>{!rate.productVariant}</td>
+                                    <td>{!rate.valueTimesRateA}</td>
+                                    <td>{!rate.valueTimesRateB}</td>
+                                    <td>{!rate.stornoNote}</td>
+                                    <td>{!rate.note}</td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                        <apex:variable var="cnt" value="{!cnt+1}" />
+                    </div>
+                </apex:pageBlock>
+            </apex:repeat>
+        </body>
+    
+        </html>
+    </apex:page>

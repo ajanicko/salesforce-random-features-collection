@@ -1,0 +1,19 @@
+.column-heading {
+    padding: 0.5rem 0.25rem;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.list-style {
+    height: 2000vh;
+    overflow-y: auto;
+}
+
+.blue-background {
+    background: #005fb2;
+}
+
+.red-background {
+    background: red;
+}

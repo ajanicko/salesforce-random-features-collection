@@ -1,0 +1,38 @@
+<template>
+    <template if:true={isSameStatus}>
+        <li class={itemStyle} draggable="true" ondragstart={itemDragStart}>
+            <article class="slds-tile slds-tile_board">
+                <h3 class="slds-truncate" title="Name">
+                    <a class="slds-truncate" href="#" onclick={navigateHandler}>
+                        <span class="slds-truncate" data-id={clonedRecord.Id} data-mode="edit" data-object={objectapiname}> {clonedRecord.Key__c} </span>
+                    </a>
+                    <div class="slds-float_right">
+                        <a href="#" onclick={navigateHandler}>
+                            <lightning-icon
+                                data-id={clonedRecord.Id}
+                                data-mode="view"
+                                data-object={objectapiname}
+                                icon-name="utility:page"
+                                alternative-text="Page"
+                                size="small"
+                            >
+                            </lightning-icon>
+                        </a>
+                        <a onclick={sendWorklogEvent}>
+                            <lightning-icon icon-name="utility:adjust_value" alternative-text="adjust_value" size="small"> </lightning-icon>
+                        </a>
+                    </div>
+                    <p class="slds-truncate" title="Name"><b>{clonedRecord.Name}</b></p>
+                </h3>
+                <p class="slds-truncate" title="DueDate__c">DueDate: {clonedRecord.DueDate__c}</p>
+                <p class="slds-truncate" title="OriginalEstimate__c">Estimate: {clonedRecord.OriginalEstimate__c}h</p>
+                <div>
+                    <a class="slds-truncate" href="#" onclick={navigateHandler}>
+                        <span class="slds-truncate" data-id={clonedRecord.Epic__c} data-mode="view" data-object="Epic__c"> {clonedRecord.EpicName} </span>
+                    </a>
+                </div>
+                <p class="slds-truncate" title="Assignee">{assigneeName}</p>
+            </article>
+        </li>
+    </template>
+</template>

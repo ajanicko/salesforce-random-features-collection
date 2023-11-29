@@ -1,0 +1,14 @@
+<template>
+    <h1 class={headingStyle}>{status}</h1>
+    <ul class="slds-has-dividers_around-space dropZone list-style" ondrop={handleDrop} ondragover={handleDragOver}>
+        <template for:each={records} for:item="recordItem">
+            <c-drag-and-drop-card
+                status={status}
+                record={recordItem}
+                key={recordItem.Id}
+                onitemdrag={handleItemDrag}
+                onworklogopen={handleWorklogOpen}
+            ></c-drag-and-drop-card>
+        </template>
+    </ul>
+</template>

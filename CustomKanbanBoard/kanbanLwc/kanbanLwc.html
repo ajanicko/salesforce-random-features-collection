@@ -1,0 +1,178 @@
+<template>
+    <div class="flex-container">
+        <!--FILTERS START-->
+        <div class="flex-item">
+            <label class="slds-form-element__label" for="assigneeInput">Assignee:</label>
+            <div class="slds-form-element__control">
+                <input
+                    id="assigneeInput"
+                    data-id="assigneeInput"
+                    name="assigneeInput"
+                    list="assigneeList"
+                    value={assigneeValue}
+                    placeholder="Select Assignee"
+                    class="slds-input"
+                    type="text"
+                    onchange={handleAssigneeChange}
+                />
+                <datalist id="assigneeList" data-id="assigneeList">
+                    <template for:each={assignees} for:item="assignee">
+                        <option key={assignee.Id}>{assignee.Name}</option>
+                    </template>
+                </datalist>
+            </div>
+        </div>
+        <div class="flex-item">
+            <lightning-combobox
+                name="priority"
+                label="Priority"
+                value={priorityValue}
+                placeholder="Select Priority"
+                options={priorityVals}
+                onchange={handlePriorityChange}
+            ></lightning-combobox>
+        </div>
+        <template if:false={hideTypeFilter}>
+            <div class="flex-item">
+                <lightning-combobox
+                    name="type"
+                    label="Type"
+                    value={typeValue}
+                    placeholder="Select Type"
+                    options={typeVals}
+                    onchange={handleTypeChange}
+                ></lightning-combobox>
+            </div>
+        </template>
+        <div class="flex-item">
+            <label class="slds-form-element__label" for="customerInput">Customer:</label>
+            <div class="slds-form-element__control">
+                <input
+                    id="customerInput"
+                    data-id="customerInput"
+                    name="customerInput"
+                    list="customerList"
+                    value={customerValue}
+                    placeholder="Select Customer"
+                    class="slds-input"
+                    type="text"
+                    onchange={handleCustomerChange}
+                />
+                <datalist id="customerList" data-id="customerList">
+                    <template for:each={customers} for:item="customer">
+                        <option key={customer.Id}>{customer.Name}</option>
+                    </template>
+                </datalist>
+            </div>
+        </div>
+        <div class="flex-item">
+            <label class="slds-form-element__label" for="projectInput">Project:</label>
+            <div class="slds-form-element__control">
+                <input
+                    id="projectInput"
+                    data-id="projectInput"
+                    name="projectInput"
+                    list="projectList"
+                    value={projectValue}
+                    placeholder="Select Project"
+                    class="slds-input"
+                    type="text"
+                    onchange={handleProjectChange}
+                />
+                <datalist id="projectList" data-id="projectList">
+                    <template for:each={projects} for:item="project">
+                        <option key={project.Id}>{project.Name}</option>
+                    </template>
+                </datalist>
+            </div>
+        </div>
+        <template if:false={recordId}>
+            <div class="flex-item">
+                <label class="slds-form-element__label" for="epicInput">Epic:</label>
+                <div class="slds-form-element__control">
+                    <input
+                        id="epicInput"
+                        data-id="epicInput"
+                        name="epicInput"
+                        list="epicList"
+                        value={epicValue}
+                        placeholder="Select Epic"
+                        class="slds-input"
+                        type="text"
+                        onchange={handleEpicChange}
+                    />
+                    <datalist id="epicList" data-id="epicList">
+                        <template for:each={epics} for:item="item">
+                            <option key={item.Id}>{item.Name}</option>
+                        </template>
+                    </datalist>
+                </div>
+            </div>
+        </template>
+    </div>
+    <!--FILTERS END-->
+
+    <!--KANBAN START-->
+    <div class="card-wrapper">
+        <template for:each={statusVals} for:item="item">
+            <div class="status-container" key={item} style={calcWidth}>
+                <c-drag-and-drop-list
+                    records={visibleRecords}
+                    status={item}
+                    columnhighlightlimit={columnHighlightLimit}
+                    objectapiname={kanbanObject}
+                    onlistitemdrag={handleListItemDrag}
+                    onlistworklogopen={handleListWorklogOpen}
+                    onitemdrop={handleItemDrop}
+                ></c-drag-and-drop-list>
+            </div>
+        </template>
+    </div>
+    <!--KANBAN END-->
+
+    <!--WORKLOG ITEM MODAL START-->
+    <template if:true={showModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+        >
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create new Worklog Item</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-record-edit-form object-api-name={workLogObject} onsuccess={handleSuccess}>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name={epicField} value={chosenRecord.Epic__c}></lightning-input-field>
+                                <lightning-input-field field-name={taskField} value={chosenRecord.taskId}></lightning-input-field>
+                                <lightning-input-field field-name={teamRoleField}></lightning-input-field>
+                                <lightning-input-field field-name={caseField} value={chosenRecord.caseId}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name={workerField} value={chosenRecord.Assignee__c}></lightning-input-field>
+                                <lightning-input-field field-name={workdateField} value={today}></lightning-input-field>
+                                <lightning-input-field field-name={durationField}></lightning-input-field>
+                                <lightning-input-field field-name={descriptionField}></lightning-input-field>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSubmit}>Submit</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!--WORKLOG ITEM MODAL END-->
+</template>
