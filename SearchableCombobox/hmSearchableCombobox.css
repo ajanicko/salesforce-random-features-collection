@@ -1,0 +1,71 @@
+@import 'c/hmBrokerPortalStyling';
+@import 'c/hmInputStyling';
+
+:host {
+    --dxp-s-form-element-text-font-family: 'Santander Micro Text', sans-serif;
+    --dxp-s-dropdown-color-background-hover: var(--hm-brand-color-green-light);
+    --hm-combobox-search-clear-icon-colour: var(--hm-brand-color-green-alt);
+}
+
+.hm-input {
+    padding-left: 2.75rem;
+    padding-right: 2.75rem;
+}
+
+.hm-combobox-search-icon {
+    position: absolute;
+    left: var(--hm-input-padding);
+    top: 1.5rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+}
+
+:host:not(:focus-within) .hm-combobox-search-clear {
+    display: none;
+}
+
+.slds-combobox_container {
+    position: relative;
+}
+
+.slds-dropdown {
+    box-shadow: 0 1px 10px 0 rgba(163, 163, 163, 0.4);
+    left: 0;
+    transform: none;
+}
+
+.slds-listbox__option:focus,
+.slds-listbox__option:hover {
+    --dxp-g-brand: var(--hm-brand-color-green);
+}
+
+/* Control the width of the dropdown menu. */
+.hm-address-search {
+    max-width: none;
+}
+.hm-address-search + .slds-dropdown {
+    width: var(--hm-input-full-width);
+}
+
+/* Clear button. */
+.hm-combobox-search-clear {
+    --slds-c-icon-color-foreground-default: var(--hm-combobox-search-clear-icon-colour);
+    cursor: pointer;
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translate(0, -50%);
+    background: transparent;
+    border: 2px solid var(--hm-combobox-search-clear-icon-colour);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.hm-combobox-search-clear lightning-icon {
+    margin-top: -0.125rem;
+}

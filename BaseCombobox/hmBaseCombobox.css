@@ -1,0 +1,42 @@
+@import 'c/hmBrokerPortalStyling';
+@import 'c/hmInputStyling';
+
+:host {
+    --dxp-s-form-element-text-font-family: 'Santander Micro Text', sans-serif;
+    --dxp-s-dropdown-color-background-hover: var(--hm-brand-color-green-light);
+}
+
+.hm-combobox {
+    position: relative;
+}
+
+li:focus,
+li:focus-visible {
+    outline: none;
+    background-color: var(--hm-brand-color-green-light);
+    border-radius: var(--hm-input-border-radius);
+}
+
+.hm-fake-input_radius {
+    border-radius: var(--hm-input-border-radius);
+}
+
+.hm-combobox-chevron-icon {
+    position: absolute;
+    right: var(--hm-input-padding);
+    top: 1.5rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+}
+
+.hm-dropdown {
+    left: 0;
+    transform: none;
+}
+
+.hm-option:focus,
+.hm-option:hover {
+    box-shadow: none;
+    border: 1px solid var(--hm-brand-color-green);
+}

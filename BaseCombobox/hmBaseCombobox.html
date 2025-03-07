@@ -1,0 +1,34 @@
+<template>
+    <div class={classes}>
+        <!-- data-ids are here so that automation testers have an easier time targeting elements since ids change -->
+        <label data-id="label1" id="label1" for="combobox1">{label}</label>
+
+        <p lwc:if={helptext} class="hm-helptext">{helptext}</p>
+
+        <div class={comboboxClasses}>
+            <div tabindex="0" data-id="combobox1" id="combobox1" aria-labelledby="label1" aria-expanded={_isOpen}
+                aria-haspopup="listbox" aria-controls="listbox1" role="combobox" onclick={handleInputClick}
+                onkeydown={handleInputKeyDown} lwc:ref="combobox1">
+                <span data-id="input1" class="slds-input_faux slds-combobox__input hm-fake-input_radius">
+                    {displayValue}
+                </span>
+            </div>
+
+            <img src={_chevronIcon} class="hm-combobox-chevron-icon" alt="" role="presentation" aria-hidden="true">
+
+            <div lwc:if={isDropdownVisible} data-id="listbox1" id="listbox1"
+                class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid hm-dropdown" role="listbox">
+                <ul onkeydown={handleListboxKeyDown} class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={options} for:item="option">
+                        <li tabindex="0" role="presentation" key={option.id} data-value={option.value}
+                            data-text={option.text} onclick={handleSelectOption}>
+                            <div class="slds-media slds-listbox__option hm-option" role="option">
+                                <span class="slds-p-around--xx-small">{option.text}</span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
